@@ -1,2 +1,3 @@
 # DirectLineAppServiceExtensionPreview
-Contains artifacts and samples to support the Bot Framework's Direct Line App Service Extension Preview
+
+This repository contains documentation, samples and preview versions of libraries to use the Direct Line App Service Extension Preview
