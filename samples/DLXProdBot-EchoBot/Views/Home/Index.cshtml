@@ -1,0 +1,56 @@
+﻿@model EchoBot.Models.ChatConfig
+@{
+    ViewData["Title"] = "Direct Line Streaming Sample";
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>Direct Line Streaming Sample</title>
+    <script src="~/directLine.js"></script>
+    <script src="https://cdn.botframework.com/botframework-webchat/master/webchat.js"></script>
+    <style>
+        html, body {
+            height: 100%
+        }
+
+        body {
+            margin: 0
+        }
+
+        #webchat,
+        #webchat > * {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="webchat" role="main"></div>
+    <script>
+        const activityMiddleware = () => next => card => {
+            if (card.activity.type === 'trace') {
+                // Return false means, don't render
+                return () => false;
+            } else {
+                return children => next(card)(children);
+            }
+        };
+
+
+        var dl = new DirectLine.DirectLine({
+            secret: '@Model.Token',
+            domain: '@Model.Domain',
+            webSocket: true,
+            conversationId: '@Model.ConversationId'
+        });
+        window.WebChat.renderWebChat({
+            activityMiddleware,
+            directLine: dl,
+            userID: '@Model.UserId'
+        }, document.getElementById('webchat'));
+    </script>
+</body>
+</html>
+
